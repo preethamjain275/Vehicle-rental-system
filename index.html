@@ -5,98 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RideRentals - Fleet Management</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-    <style>
-        /* Base font */
-        html {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Custom Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-slide-up {
-            animation: slideUp 0.3s ease-out;
-        }
-
-        /* Print-specific styles */
-        @media print {
-
-            /* Hide everything by default */
-            body * {
-                visibility: hidden;
-            }
-
-            /* Show only the bill modal content */
-            #bill-modal,
-            #bill-content,
-            #bill-content * {
-                visibility: visible;
-            }
-
-            /* Reset modal styles for printing */
-            #bill-modal {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background: none;
-                backdrop-filter: none;
-                padding: 0;
-            }
-
-            #bill-content {
-                width: 100%;
-                max-width: none;
-                /* Fix: Allow content to fill print page */
-                box-shadow: none;
-                border: none;
-                margin: 0;
-                border-radius: 0;
-            }
-
-            /* Hide buttons in print view */
-            .print-hidden {
-                display: none !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="min-h-screen bg-slate-100 text-slate-800 font-sans">
 
-    <!-- Loader (Initially Hidden) -->
     <div id="loader"
         class="hidden min-h-screen fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 text-slate-400">
-        <!-- Loader SVG -->
         <svg class="w-10 h-10 animate-spin mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
@@ -105,13 +22,11 @@
         <p>Loading Fleet...</p>
     </div>
 
-    <!-- Navbar -->
     <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-2">
                     <div class="bg-blue-600 p-2 rounded-full">
-                        <!-- Car SVG -->
                         <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -131,21 +46,17 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Header & Filter -->
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <h1 class="text-3xl font-bold text-slate-900">Vehicle Fleet</h1>
                 <p class="text-slate-500 mt-1">Choose from our premium collection of cars and motorcycles.</p>
             </div>
 
-            <!-- Filter Tabs -->
             <div id="filter-tabs" class="flex bg-white p-1 rounded-xl shadow-sm border border-slate-200">
                 <button data-filter="all"
                     class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize flex items-center gap-2 bg-slate-900 text-white shadow-md">
-                    <!-- Filter SVG -->
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -155,7 +66,6 @@
                 </button>
                 <button data-filter="car"
                     class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize flex items-center gap-2 text-slate-500 hover:bg-slate-50 hover:text-slate-700">
-                    <!-- Car SVG -->
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -169,7 +79,6 @@
                 </button>
                 <button data-filter="bike"
                     class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize flex items-center gap-2 text-slate-500 hover:bg-slate-50 hover:text-slate-700">
-                    <!-- Bike SVG -->
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -183,14 +92,10 @@
             </div>
         </div>
 
-        <!-- Vehicle Grid -->
         <div id="vehicle-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Vehicles will be injected here -->
-        </div>
+            </div>
 
-        <!-- No Vehicles Found Message -->
         <div id="no-vehicles-message" class="text-center py-20 text-slate-400 hidden">
-            <!-- Car SVG -->
             <svg class="w-16 h-16 mx-auto mb-4 opacity-20" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round">
@@ -205,7 +110,6 @@
 
     </main>
 
-    <!-- Rental Modal (Hidden by default) -->
     <div id="rental-modal"
         class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
@@ -226,7 +130,6 @@
                     </div>
                 </div>
 
-                <!-- Cost Calculation -->
                 <div class="bg-slate-50 p-4 rounded-xl space-y-2 border border-slate-100">
                     <div class="flex justify-between text-sm text-slate-600">
                         <span>Rate per day</span>
@@ -257,13 +160,10 @@
         </div>
     </div>
 
-    <!-- Bill Modal (Hidden by default) -->
     <div id="bill-modal"
         class="hidden fixed inset-0 z-[60] items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-        <!-- Bill Content -->
         <div id="bill-content" class="bg-white rounded-lg shadow-2xl w-full max-w-lg overflow-hidden">
             <div class="p-8 space-y-6">
-                <!-- Header -->
                 <div class="flex justify-between items-center pb-4 border-b border-slate-100">
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900">Invoice</h2>
@@ -282,7 +182,6 @@
                     </div>
                 </div>
 
-                <!-- Invoice Details -->
                 <div class="grid grid-cols-2 gap-4 text-sm">
                     <div>
                         <span class="text-slate-500 font-medium block">Invoice ID:</span>
@@ -298,7 +197,6 @@
                     </div>
                 </div>
 
-                <!-- Rented Vehicle -->
                 <div class="border border-slate-100 rounded-lg p-4 flex items-center gap-4">
                     <img id="bill-vehicle-image" src="https://via.placeholder.com/100x75" alt="Vehicle"
                         class="w-24 h-auto rounded-md bg-slate-100 object-cover">
@@ -308,7 +206,6 @@
                     </div>
                 </div>
 
-                <!-- Line Items Table -->
                 <div class="flow-root">
                     <div class="-mx-4 -my-2 overflow-x-auto">
                         <div class="inline-block min-w-full py-2 align-middle">
@@ -345,7 +242,6 @@
                 </div>
 
 
-                <!-- Totals -->
                 <div class="space-y-3 pt-4 border-t border-slate-200">
                     <div class="flex justify-between font-medium text-slate-700">
                         <span>Total (USD)</span>
@@ -357,7 +253,6 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex gap-3 pt-6 border-t border-slate-100 print-hidden">
                     <button id="bill-close-btn"
                         class="flex-1 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors">
@@ -380,7 +275,6 @@
     </div>
 
 
-    <!-- Notification Toast (Hidden by default) -->
     <div id="notification-toast"
         class="hidden fixed bottom-4 right-4 max-w-md p-4 rounded-lg shadow-lg border-l-4 z-50 items-start gap-3 animate-slide-up">
         <div class="flex-1">
@@ -391,28 +285,22 @@
     </div>
 
 
-    <!-- Vehicle Card Template (for cloning) -->
     <template id="vehicle-card-template">
         <div
             class="group relative bg-white rounded-2xl shadow-sm border transition-all duration-300 hover:shadow-xl overflow-hidden">
-            <!-- Image -->
             <div class="w-full h-48 bg-slate-200 overflow-hidden relative">
                 <img data-id="image" src="https://via.placeholder.com/400x225?text=Loading..." alt="Vehicle Image"
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
             </div>
 
-            <!-- Status Badge -->
             <div class="absolute top-4 right-4 z-10" data-id="status-badge">
-                <!-- Content will be injected -->
-            </div>
+                </div>
 
-            <!-- Card Content -->
             <div class="p-6">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-3 rounded-xl" data-id="type-icon-container">
-                        <!-- Type Icon SVG will be injected -->
-                    </div>
+                        </div>
                 </div>
 
                 <h3 class="text-xl font-bold text-slate-900" data-id="make-model">Make Model</h3>
@@ -420,7 +308,6 @@
 
                 <div class="flex items-center gap-4 mb-6 text-sm text-slate-600">
                     <div class="flex items-center gap-1.5 bg-slate-100 px-2 py-1 rounded-md">
-                        <!-- DollarSign SVG -->
                         <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -430,23 +317,17 @@
                         <span data-id="price">$0/day</span>
                     </div>
 
-                    <!-- Specifics -->
                     <div class="flex items-center gap-1.5 bg-slate-100 px-2 py-1 rounded-md" data-id="specific-feature">
-                        <!-- Feature Icon and Text will be injected -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="pt-4 border-t border-slate-100" data-id="action-button-container">
-                    <!-- Button will be injected -->
-                </div>
+                    </div>
             </div>
         </div>
     </template>
 
-    <!-- SVGs for Template Cloning -->
     <template id="svg-templates">
-        <!-- Rented Badge -->
         <span id="badge-rented"
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700 border border-orange-200 shadow-sm">
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -458,7 +339,6 @@
             </svg>
             Rented
         </span>
-        <!-- Available Badge -->
         <span id="badge-available"
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200 shadow-sm">
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -468,7 +348,6 @@
             </svg>
             Available
         </span>
-        <!-- Car Icon -->
         <svg id="icon-car" class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v3c0 .6.4 1 1 1h2" />
@@ -477,7 +356,6 @@
             <circle cx="7" cy="17" r="2" />
             <circle cx="17" cy="17" r="2" />
         </svg>
-        <!-- Bike Icon -->
         <svg id="icon-bike" class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
@@ -486,7 +364,6 @@
             <circle cx="15" cy="5" r="1" />
             <path d="M12 17.5h-3.5l-2-3h3l2-4h4l2 4h3l-2 3h-3.5" />
         </svg>
-        <!-- Doors Feature -->
         <div id="feature-car" class="flex items-center gap-1.5" title="Number of Doors">
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -497,7 +374,6 @@
             </svg>
             <span data-id="feature-text">_ Doors</span>
         </div>
-        <!-- Sidecar Feature -->
         <div id="feature-bike" class="flex items-center gap-1.5" title="Sidecar Availability">
             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -507,7 +383,6 @@
             </svg>
             <span data-id="feature-text">_</span>
         </div>
-        <!-- Rent Button -->
         <button id="button-rent"
             class="w-full py-2.5 rounded-lg bg-slate-900 text-white font-semibold hover:bg-slate-800 shadow-lg shadow-slate-200 transition-all flex items-center justify-center gap-2">
             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -519,7 +394,6 @@
             </svg>
             Rent Now
         </button>
-        <!-- Return Button -->
         <button id="button-return"
             class="w-full py-2.5 rounded-lg bg-white border-2 border-orange-200 text-orange-700 font-semibold hover:bg-orange-50 hover:border-orange-300 transition-colors flex items-center justify-center gap-2">
             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -533,476 +407,7 @@
         </button>
     </template>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import Firebase modules
-        /* * We are removing all Firebase imports and logic to run the app in a local-only mode.
-         * This "fixes" the connection error by making the app work offline.
-        */
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        // import { 
-        //     getAuth, 
-        //     signInAnonymously, 
-        //     signInWithCustomToken,
-        //     onAuthStateChanged 
-        // } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        // import { 
-        //     getFirestore, 
-        //     collection, 
-        //     doc, 
-        //     onSnapshot, 
-        //     writeBatch,
-        //     updateDoc,
-        //     setLogLevel
-        // } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // --- Firebase Configuration ---
-        const appId = 'default-app-id'; // Set a default
-
-        // All Firebase initialization is removed.
-        const app = null;
-        const auth = null;
-        const db = null;
-
-        // --- Initial Fleet Data ---
-        const INITIAL_FLEET = [
-            { id: '1', type: 'car', make: 'Toyota', model: 'Camry', year: 2021, price: 55.00, isRented: false, doors: 4, imageUrl: 'https://image.pollinations.ai/prompt/2021%20Toyota%20Camry,%20silver,%20urban%20setting,%20photorealistic?width=400&height=225&seed=1' },
-            { id: '2', type: 'car', make: 'Honda', model: 'Civic', year: 2020, price: 45.00, isRented: false, doors: 2, imageUrl: 'https://image.pollinations.ai/prompt/2020%20Honda%20Civic,%20red,%20dynamic%20shot,%20photorealistic?width=400&height=225&seed=2' },
-            { id: '3', type: 'bike', make: 'Harley-Davidson', model: 'Street Bob', year: 2019, price: 35.00, isRented: false, hasSidecar: false, imageUrl: 'https://image.pollinations.ai/prompt/2019%20Harley-Davidson%20Street%20Bob,%20dark%20grey,%20on%20a%20highway,%20photorealistic?width=400&height=225&seed=3' },
-            { id: '4', type: 'bike', make: 'Yamaha', model: 'MT-07', year: 2022, price: 30.00, isRented: true, hasSidecar: false, imageUrl: 'https://image.pollinations.ai/prompt/2022%20Yamaha%20MT-07,%20blue,%20sporty%20stance,%20photorealistic?width=400&height=225&seed=4' },
-            { id: '5', type: 'car', make: 'Ford', model: 'Mustang', year: 2023, price: 70.00, isRented: false, doors: 2, imageUrl: 'https://image.pollinations.ai/prompt/2023%20Ford%20Mustang,%20yellow,%20muscle%20car,%20action%20shot,%20photorealistic?width=400&height=225&seed=5' },
-            { id: '6', type: 'bike', make: 'KTM', model: 'Duke 390', year: 2023, price: 28.00, isRented: false, hasSidecar: false, imageUrl: 'https://image.pollinations.ai/prompt/2023%20KTM%20Duke%20390,%20orange,%20on%20a%20mountain%20road,%20photorealistic?width=400&height=225&seed=6' },
-        ];
-
-        // --- Application State ---
-        let state = {
-            user: null,
-            vehicles: INITIAL_FLEET, // Load initial data immediately
-            loading: false,          // Start with loading false
-            filter: 'all', // 'all', 'car', 'bike'
-            selectedVehicle: null, // For rental modal
-            rentalDays: 1,
-            notification: null, // { type, message, details }
-            notificationTimeout: null,
-            billDetails: null // { vehicle, days, totalUSD, totalINR, invoiceId, rentalDate }
-        };
-
-        // --- DOM Element References ---
-        const dom = {
-            loader: document.getElementById('loader'),
-            filterTabs: document.getElementById('filter-tabs'),
-            vehicleGrid: document.getElementById('vehicle-grid'),
-            noVehiclesMessage: document.getElementById('no-vehicles-message'),
-            vehicleCardTemplate: document.getElementById('vehicle-card-template'),
-            svgTemplates: document.getElementById('svg-templates'),
-
-            // Modal
-            modal: document.getElementById('rental-modal'),
-            modalTitle: document.getElementById('modal-title'),
-            daysDecrement: document.getElementById('days-decrement'),
-            daysIncrement: document.getElementById('days-increment'),
-            rentalDaysDisplay: document.getElementById('rental-days-display'),
-            modalRate: document.getElementById('modal-rate'),
-            modalTotalUsd: document.getElementById('modal-total-usd'),
-            modalTotalInr: document.getElementById('modal-total-inr'),
-            modalCancelBtn: document.getElementById('modal-cancel-btn'),
-            modalConfirmBtn: document.getElementById('modal-confirm-btn'),
-
-            // Bill Modal
-            billModal: document.getElementById('bill-modal'),
-            billContent: document.getElementById('bill-content'),
-            billInvoiceId: document.getElementById('bill-invoice-id'),
-            billDate: document.getElementById('bill-date'),
-            billVehicleImage: document.getElementById('bill-vehicle-image'),
-            billVehicleName: document.getElementById('bill-vehicle-name'),
-            billVehicleYear: document.getElementById('bill-vehicle-year'),
-            billLineItemDesc: document.getElementById('bill-line-item-desc'),
-            billLineItemRate: document.getElementById('bill-line-item-rate'),
-            billLineItemTotal: document.getElementById('bill-line-item-total'),
-            billTotalUsd: document.getElementById('bill-total-usd'),
-            billTotalInr: document.getElementById('bill-total-inr'),
-            billPrintBtn: document.getElementById('bill-print-btn'),
-            billCloseBtn: document.getElementById('bill-close-btn'),
-
-            // Notification
-            toast: document.getElementById('notification-toast'),
-            toastMessage: document.getElementById('notification-message'),
-            toastDetails: document.getElementById('notification-details'),
-            toastCloseBtn: document.getElementById('notification-close-btn')
-        };
-
-        // --- Helper to get SVG from template ---
-        const getSvg = (id) => dom.svgTemplates.content.getElementById(id).cloneNode(true);
-
-        // --- Render Functions ---
-
-        /**
-         * Main render function to update the UI based on state
-         */
-        function render() {
-            // Render Loader
-            dom.loader.classList.toggle('hidden', !state.loading);
-
-            // Render Filter Tabs
-            dom.filterTabs.querySelectorAll('.filter-btn').forEach(btn => {
-                const filter = btn.dataset.filter;
-                const isActive = state.filter === filter;
-                btn.classList.toggle('bg-slate-900', isActive);
-                btn.classList.toggle('text-white', isActive);
-                btn.classList.toggle('shadow-md', isActive);
-                btn.classList.toggle('text-slate-500', !isActive);
-                btn.classList.toggle('hover:bg-slate-50', !isActive);
-                btn.classList.toggle('hover:text-slate-700', !isActive);
-            });
-
-            // Render Vehicles
-            renderVehicleGrid();
-
-            // Render Modal
-            renderModal();
-
-            // Render Bill Modal
-            renderBillModal();
-
-            // Render Notification
-            renderNotification();
-        }
-
-        /**
-         * Renders the grid of vehicle cards
-         */
-        function renderVehicleGrid() {
-            dom.vehicleGrid.innerHTML = ''; // Clear existing grid
-
-            const filteredVehicles = state.vehicles.filter(v => {
-                if (state.filter === 'all') return true;
-                return v.type === state.filter;
-            });
-
-            if (filteredVehicles.length === 0 && !state.loading) {
-                dom.noVehiclesMessage.classList.remove('hidden');
-            } else {
-                dom.noVehiclesMessage.classList.add('hidden');
-            }
-
-            filteredVehicles.forEach(vehicle => {
-                const card = dom.vehicleCardTemplate.content.cloneNode(true);
-                const cardRoot = card.querySelector('.group');
-
-                // Find elements within the card
-                const ui = {
-                    image: card.querySelector('[data-id="image"]'),
-                    statusBadge: card.querySelector('[data-id="status-badge"]'),
-                    typeIconContainer: card.querySelector('[data-id="type-icon-container"]'),
-                    makeModel: card.querySelector('[data-id="make-model"]'),
-                    yearType: card.querySelector('[data-id="year-type"]'),
-                    price: card.querySelector('[data-id="price"]'),
-                    specificFeature: card.querySelector('[data-id="specific-feature"]'),
-                    actionButtonContainer: card.querySelector('[data-id="action-button-container"]'),
-                };
-
-                // --- Populate Card ---
-                cardRoot.classList.toggle('border-orange-200', vehicle.isRented);
-                cardRoot.classList.toggle('bg-orange-50/30', vehicle.isRented);
-                cardRoot.classList.toggle('border-slate-200', !vehicle.isRented);
-                cardRoot.classList.toggle('hover:-translate-y-1', !vehicle.isRented);
-
-                // Image
-                ui.image.src = vehicle.imageUrl;
-                ui.image.alt = `${vehicle.make} ${vehicle.model}`;
-                ui.image.onerror = () => {
-                    ui.image.src = `https://placehold.co/400x225/e2e8f0/94a3b8?text=Image+Not+Found`;
-                };
-
-                // Status Badge
-                ui.statusBadge.innerHTML = '';
-                ui.statusBadge.appendChild(getSvg(vehicle.isRented ? 'badge-rented' : 'badge-available'));
-
-                // Type Icon
-                ui.typeIconContainer.innerHTML = '';
-                if (vehicle.type === 'car') {
-                    ui.typeIconContainer.classList.add('bg-blue-50', 'text-blue-600');
-                    ui.typeIconContainer.appendChild(getSvg('icon-car'));
-                } else {
-                    ui.typeIconContainer.classList.add('bg-purple-50', 'text-purple-600');
-                    ui.typeIconContainer.appendChild(getSvg('icon-bike'));
-                }
-
-                // Text Content
-                ui.makeModel.textContent = `${vehicle.make} ${vehicle.model}`;
-                ui.yearType.textContent = `${vehicle.year} • ${vehicle.type === 'car' ? 'Automatic' : 'Manual'}`;
-                ui.price.textContent = `$${vehicle.price.toFixed(2)}/day`;
-
-                // Specific Feature
-                ui.specificFeature.innerHTML = '';
-                let featureClone;
-                if (vehicle.type === 'car') {
-                    featureClone = getSvg('feature-car');
-                    featureClone.querySelector('[data-id="feature-text"]').textContent = `${vehicle.doors} Doors`;
-                } else {
-                    featureClone = getSvg('feature-bike');
-                    featureClone.querySelector('[data-id="feature-text"]').textContent = vehicle.hasSidecar ? 'Sidecar' : 'Solo';
-                }
-                ui.specificFeature.appendChild(featureClone);
-
-                // Action Button
-                ui.actionButtonContainer.innerHTML = '';
-                let buttonClone;
-                if (vehicle.isRented) {
-                    buttonClone = getSvg('button-return');
-                    buttonClone.addEventListener('click', () => handleReturn(vehicle));
-                } else {
-                    buttonClone = getSvg('button-rent');
-                    buttonClone.addEventListener('click', () => openRentalModal(vehicle));
-                }
-                ui.actionButtonContainer.appendChild(buttonClone);
-
-                // Append card to grid
-                dom.vehicleGrid.appendChild(card);
-            });
-        }
-
-        /**
-         * Renders the rental modal
-         */
-        function renderModal() {
-            if (state.selectedVehicle) {
-                const vehicle = state.selectedVehicle;
-                const totalUSD = vehicle.price * state.rentalDays;
-                const totalINR = totalUSD * 82;
-
-                dom.modalTitle.textContent = `Rent ${vehicle.make} ${vehicle.model}`;
-                dom.rentalDaysDisplay.textContent = state.rentalDays;
-                dom.modalRate.textContent = `$${vehicle.price.toFixed(2)}`;
-                dom.modalTotalUsd.textContent = `$${totalUSD.toFixed(2)}`;
-                dom.modalTotalInr.textContent = `₹${totalINR.toFixed(2)}`;
-
-                dom.modal.classList.remove('hidden');
-                dom.modal.classList.add('flex');
-            } else {
-                dom.modal.classList.add('hidden');
-                dom.modal.classList.remove('flex');
-            }
-        }
-
-        /**
-         * Renders the bill modal
-         */
-        function renderBillModal() {
-            if (state.billDetails) {
-                const { vehicle, days, totalUSD, totalINR, invoiceId, rentalDate } = state.billDetails;
-
-                dom.billInvoiceId.textContent = invoiceId;
-                dom.billDate.textContent = rentalDate;
-                dom.billVehicleImage.src = vehicle.imageUrl;
-                dom.billVehicleImage.onerror = () => {
-                    dom.billVehicleImage.src = `https://placehold.co/100x75/e2e8f0/94a3b8?text=Image`;
-                };
-                dom.billVehicleName.textContent = `${vehicle.make} ${vehicle.model}`;
-                dom.billVehicleYear.textContent = vehicle.year;
-
-                dom.billLineItemDesc.textContent = `Rental for ${days} day${days > 1 ? 's' : ''}`;
-                dom.billLineItemRate.textContent = `$${vehicle.price.toFixed(2)}/day`;
-                dom.billLineItemTotal.textContent = `$${totalUSD.toFixed(2)}`;
-
-                dom.billTotalUsd.textContent = `$${totalUSD.toFixed(2)}`;
-                dom.billTotalInr.textContent = `₹${totalINR.toFixed(2)}`;
-
-                dom.billModal.classList.remove('hidden');
-                dom.billModal.classList.add('flex');
-            } else {
-                dom.billModal.classList.add('hidden');
-                dom.billModal.classList.remove('flex');
-            }
-        }
-
-        /**
-         * Renders the notification toast
-         */
-        function renderNotification() {
-            if (state.notificationTimeout) {
-                clearTimeout(state.notificationTimeout);
-                state.notificationTimeout = null;
-            }
-
-            if (state.notification) {
-                const { type, message, details } = state.notification;
-                const styles = {
-                    success: "bg-green-100 border-green-500 text-green-800",
-                    info: "bg-blue-100 border-blue-500 text-blue-800",
-                    error: "bg-red-100 border-red-500 text-red-800"
-                };
-
-                dom.toast.className = `fixed bottom-4 right-4 max-w-md p-4 rounded-lg shadow-lg border-l-4 z-50 flex items-start gap-3 animate-slide-up ${styles[type]}`;
-                dom.toastMessage.textContent = message;
-
-                if (details) {
-                    dom.toastDetails.textContent = details;
-                    dom.toastDetails.classList.remove('hidden');
-                } else {
-                    dom.toastDetails.classList.add('hidden');
-                }
-
-                dom.toast.classList.remove('hidden');
-
-                state.notificationTimeout = setTimeout(hideNotification, 5000);
-            } else {
-                dom.toast.classList.add('hidden');
-            }
-        }
-
-        // --- State Updaters & Actions ---
-
-        function setState(newState) {
-            state = { ...state, ...newState };
-            render();
-        }
-
-        function openRentalModal(vehicle) {
-            setState({ selectedVehicle: vehicle, rentalDays: 1 });
-        }
-
-        function closeRentalModal() {
-            setState({ selectedVehicle: null });
-        }
-
-        function hideNotification() {
-            setState({ notification: null });
-        }
-
-        function closeBillModal() {
-            setState({ billDetails: null });
-        }
-
-        function adjustRentalDays(amount) {
-            const newDays = Math.max(1, state.rentalDays + amount);
-            setState({ rentalDays: newDays });
-        }
-
-        /**
-         * Rent a vehicle
-         */
-        async function handleRent() {
-            // REMOVED GUARD: No longer checking for user or db.
-
-            const vehicleToRent = state.selectedVehicle;
-            if (!vehicleToRent || state.rentalDays <= 0) return;
-
-            // --- OFFLINE LOGIC ---
-            // Instead of calling database, we update the local state directly.
-            const newVehicles = state.vehicles.map(v => {
-                if (v.id === vehicleToRent.id) {
-                    return { ...v, isRented: true }; // Create a new object with isRented: true
-                }
-                return v; // Return other vehicles unchanged
-            });
-            // --- END OFFLINE LOGIC ---
-
-            try {
-                // We simulate a successful rental
-
-                const totalUSD = vehicleToRent.price * state.rentalDays;
-                const totalINR = totalUSD * 82;
-
-                // --- New Bill Generation Logic ---
-                const invoiceId = `RNT-${Math.floor(Math.random() * 90000) + 10000}`;
-                const rentalDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                setState({
-                    vehicles: newVehicles, // Set the new vehicles list
-                    selectedVehicle: null, // Close rental modal
-                    rentalDays: 1,
-                    // Instead of a notification, we set billDetails
-                    billDetails: {
-                        vehicle: vehicleToRent,
-                        days: state.rentalDays,
-                        totalUSD,
-                        totalINR,
-                        invoiceId,
-                        rentalDate
-                    }
-                });
-            } catch (error) {
-                // This catch block will likely not be hit, but it's good practice.
-                console.error("Error processing local rental:", error);
-                setState({
-                    notification: { type: 'error', message: "Failed to process rental." }
-                });
-            }
-        }
-
-        /**
-         * Return a vehicle
-         */
-        async function handleReturn(vehicle) {
-            // REMOVED GUARD: No longer checking for user or db.
-
-            // --- OFFLINE LOGIC ---
-            // Update the local state directly
-            const newVehicles = state.vehicles.map(v => {
-                if (v.id === vehicle.id) {
-                    return { ...v, isRented: false }; // Create a new object with isRented: false
-                }
-                return v;
-            });
-            // --- END OFFLINE LOGIC ---
-
-            try {
-                // Simulate a successful return
-                // await updateDoc(vehicleRef, { isRented: false });
-                setState({
-                    vehicles: newVehicles, // Set the new vehicles list
-                    notification: {
-                        type: 'info',
-                        message: `Returned ${vehicle.make} ${vehicle.model}`,
-                        details: "Vehicle is now available for others."
-                    }
-                });
-            } catch (error) {
-                console.error("Error processing local return:", error);
-                setState({
-                    notification: { type: 'error', message: "Failed to return vehicle." }
-                });
-            }
-        }
-
-        // --- Firebase Initialization ---
-        /*
-         * All Firebase-related functions are removed as we are running in local-only mode.
-        */
-
-        // --- Event Listeners Setup ---
-        function setupEventListeners() {
-            // Filter Tabs
-            dom.filterTabs.addEventListener('click', (e) => {
-                const button = e.target.closest('.filter-btn');
-                if (button && button.dataset.filter) {
-                    setState({ filter: button.dataset.filter });
-                }
-            });
-
-            // Modal Buttons
-            dom.daysDecrement.addEventListener('click', () => adjustRentalDays(-1));
-            dom.daysIncrement.addEventListener('click', () => adjustRentalDays(1));
-            dom.modalCancelBtn.addEventListener('click', closeRentalModal);
-            dom.modalConfirmBtn.addEventListener('click', handleRent);
-
-            // Bill Modal Buttons
-            dom.billPrintBtn.addEventListener('click', () => window.print());
-            dom.billCloseBtn.addEventListener('click', closeBillModal);
-
-            // Notification Close
-            dom.toastCloseBtn.addEventListener('click', hideNotification);
-        }
-
-        // --- App Entry Point ---
-        document.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
-            // initAuth(); // No longer needed
-            render(); // Initial render (shows data immediately from INITIAL_FLEET)
-        });
-
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
