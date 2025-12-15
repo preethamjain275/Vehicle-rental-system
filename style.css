@@ -1,1 +1,78 @@
+/* Base font */
+html {
+    font-family: 'Inter', sans-serif;
+}
 
+/* Custom Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Print-specific styles */
+@media print {
+
+    /* Hide everything by default */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Show only the bill modal content */
+    #bill-modal,
+    #bill-content,
+    #bill-content * {
+        visibility: visible;
+    }
+
+    /* Reset modal styles for printing */
+    #bill-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: none;
+        backdrop-filter: none;
+        padding: 0;
+    }
+
+    #bill-content {
+        width: 100%;
+        max-width: none;
+        /* Fix: Allow content to fill print page */
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    /* Hide buttons in print view */
+    .print-hidden {
+        display: none !important;
+    }
+}
